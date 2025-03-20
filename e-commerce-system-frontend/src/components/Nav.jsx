@@ -1,39 +1,48 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 import img from '../assets/logo-e-commerce-2.png';
-import search from '../assets/search.png';
+import {assets} from '../assets/assets'
 
-function Nav() {
+const Nav = () => {
   return (
-    <>
-      <nav>
-        <div className="bg-white container flex items-center py-3 border-b border-gray-600">
-          <div className="px-3">
-            <img src={img} height="50px" width="50px" alt="" />
-          </div>
-          <div className='hidden md:block'>
-            <ul className='flex items-center gap-5 text-gray-600 px-3'>
-              <li>
-                <Link to='/' className='inline-block py-1 px-3 hover:text-primary font-semibold'>Inicio</Link>
-              </li>
-              <li>
-                <Link to='#' className='inline-block py-1 px-3 hover:text-primary font-semibold'>Categorias</Link>
-              </li>
-              <li>
-                <Link to='#' className='inline-block py-1 px-3 hover:text-primary font-semibold'>Ofertas</Link>
-              </li>
-              <li>
-                <Link to='#' className='inline-block py-1 px-3 hover:text-primary font-semibold'>Sobre Nosotros</Link>
-              </li>
-            </ul>
-          </div>
-          <div className='flex text-gray-600'>
-            <input type="text" className='placeholder:italic' placeholder='search..???' name='search'/>
-            <img src={search} width="20px" height="20px"></img>
+    <div className='flex items-center justify-between py-5 font-medium'>
+      <img src={img} alt="" className='size-16'/>
+      <ul className='hidden sm:flex gap-5 text-sm text-gray-500'>
+        <NavLink to='/' className='flex flex-col items-center gap-1'>
+          <p>Inicio</p>
+          <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
+        </NavLink>
+        <NavLink to='/collection' className='flex flex-col items-center gap-1'>
+          <p>Colección</p>
+          <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
+        </NavLink>
+        <NavLink to='/about' className='flex flex-col items-center gap-1'>
+          <p>Sobre Nosotros</p>
+          <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
+        </NavLink>
+        <NavLink to='/contact' className='flex flex-col items-center gap-1'>
+          <p>Contactanos</p>
+          <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
+        </NavLink>
+      </ul>
+      <div className='flex items-center gap-6'>
+        <img src={assets.search_icon} className='w-5 cursor-pointer' alt="" />
+        <div className='group relative'>
+          <img src={assets.profile_icon} className='w-5 cursor-pointer' alt="" />
+          <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-3'>
+            <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
+              <p className='cursor-pointer hover:text-black'>Mi perfil</p>
+              <p className='cursor-pointer hover:text-black'>Ordenes</p>
+              <p className='cursor-pointer hover:text-black'>Salir</p>
+            </div>
           </div>
         </div>
-      </nav>
-    </>
+        <Link to='/cart' className='relative'>
+          <img src={assets.cart_icon} className='w-5 min-w5' alt="" />
+          <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
+        </Link>
+      </div>
+    </div>
   )
 }
 export default Nav
