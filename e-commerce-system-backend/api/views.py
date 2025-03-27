@@ -4,7 +4,8 @@ from .serializers import ProductoSerializer,CategoriaSerializer,SubCategoriaSeri
 from rest_framework import generics,viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+import os
+from django.conf import settings
 
 def index(request):
     context = {
@@ -17,6 +18,34 @@ def index(request):
 class ProductoView(viewsets.ModelViewSet):
     serializer_class = ProductoSerializer
     queryset = Producto.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        # Verificar si se envió una imagen
+        image = request.FILES.get('image')
+        if image:
+            # Ruta donde se guardará la imagen (en la carpeta del frontend)
+            frontend_assets_path = os.path.join(settings.BASE_DIR, '../e-commerce-system-frontend/src/assets')
+            os.makedirs(frontend_assets_path, exist_ok=True)  # Crear la carpeta si no existe
+
+            # Guardar la imagen
+            image_path = os.path.join(frontend_assets_path, image.name)
+            with open(image_path, 'wb') as f:
+                for chunk in image.chunks():
+                    f.write(chunk)
+
+            # Construir la URL relativa para guardar en la base de datos
+            image_url = f"/assets/{image.name}"
+        else:
+            image_url = None
+
+        # Crear el producto con la URL de la imagen
+        data = request.data.copy()
+        data['imagenes'] = image_url
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class CategoriaView(viewsets.ModelViewSet):
     serializer_class = CategoriaSerializer
