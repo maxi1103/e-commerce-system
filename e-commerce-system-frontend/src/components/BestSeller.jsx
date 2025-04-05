@@ -8,8 +8,8 @@ const BestSeller = () => {
     const [bestSeller,setBestSeller] = useState([]);
     
     useEffect(() => {
-        // const bestProduct = products.filter((item)=>(item.masvendido));
-        setBestSeller(productos);
+        const bestProduct = productos.filter((item)=>(item.masvendido));
+        setBestSeller(bestProduct);
         console.log(productos)
     },[productos])
 

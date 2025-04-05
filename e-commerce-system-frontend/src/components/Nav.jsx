@@ -10,19 +10,19 @@ const Nav = () => {
     <div className='flex items-center justify-between py-5 font-medium'>
       <img src={img} alt="" className='size-16'/>
       <ul className='hidden sm:flex gap-5 text-sm text-gray-500'>
-        <NavLink to='/' className='flex flex-col items-center gap-1'>
+        <NavLink to='/' className='flex flex-col items-center gap-1 hover:text-gray-800'>
           <p>Inicio</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
         </NavLink>
-        <NavLink to='/collection' className='flex flex-col items-center gap-1'>
+        <NavLink to='/collection' className='flex flex-col items-center gap-1 hover:text-gray-800'>
           <p>Colección</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
         </NavLink>
-        <NavLink to='/about' className='flex flex-col items-center gap-1'>
+        <NavLink to='/about' className='flex flex-col items-center gap-1 hover:text-gray-800'>
           <p>Sobre Nosotros</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
         </NavLink>
-        <NavLink to='/contact' className='flex flex-col items-center gap-1'>
+        <NavLink to='/contact' className='flex flex-col items-center gap-1 hover:text-gray-800'>
           <p>Contactanos</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
         </NavLink>
