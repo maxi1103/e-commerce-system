@@ -6,6 +6,8 @@ export const ShopContext = createContext();
     const ShopContextProvider = (props) => {
     // Estado para almacenar los productos
     const [productos, setProductos] = useState([]);
+    const [search, setSearch] = useState('');
+    const [showSearch,setShowSearch] = useState(true);
 
     // Función para obtener los productos desde la API
     const fetchProductos = async () => {
@@ -25,6 +27,10 @@ export const ShopContext = createContext();
     // Valor compartido en el contexto
   const value = {
     productos, // Los productos estarán disponibles globalmente
+    search,
+    setSearch,
+    showSearch,
+    setShowSearch,
     fetchProductos, // También puedes exponer esta función si necesitas recargar los productos
   };
     return (
