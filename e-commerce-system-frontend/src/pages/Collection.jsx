@@ -4,7 +4,7 @@ import Title from '../components/Title';
 import ProductoItem from '../components/ProductoItem';
 
 const Collection = () => {
-  const { productos } = useContext(ShopContext);
+  const { productos, search } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts,setFilterProducts] = useState([]);
   const [category, setCategory]=useState([]);
@@ -35,6 +35,10 @@ const Collection = () => {
   const aplyFilter = () =>{
     
     let productsCopy= productos.slice();
+    if( search ) {
+      productsCopy = productsCopy.filter((item) => item.nombre.toLowerCase().includes(search.toLowerCase()));
+    }
+
     if (category.length > 0){
       productsCopy = productsCopy.filter((item) => category.includes(item.categoria));
     }
@@ -54,7 +58,7 @@ const Collection = () => {
         break;
       case 'mayor-menor':
         setFilterProducts(ftCopy.sort((a,b)=>(b.precio - a.precio)));
-        break;
+        break;                                                
       default: 
         aplyFilter();
         break;
@@ -70,7 +74,7 @@ const Collection = () => {
   }, [productos]);
   useEffect(()=>{
     aplyFilter();
-  },[category,subCategory])
+  },[category,subCategory,search])
   useEffect(()=>{
     sortProduct();
   },[sortType])

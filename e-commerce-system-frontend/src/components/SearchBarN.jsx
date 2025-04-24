@@ -1,14 +1,31 @@
 import { useContext } from 'react';
 import React from 'react'
 import { ShopContext } from '../context/ShopContext';
+import { useLocation, useNavigate} from 'react-router-dom';
 
 const SearchBarN = () => {
   const { search, setSearch, showSearch, setShowSearch } = useContext(ShopContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Función para manejar el clic en el icono de búsqueda
+  const handleSearchClick = () => {
+    if (location.pathname !== '/collection') {
+     navigate('/collection'); // Redirige a /collection si no estás ya en esa página
+    }
+  };
+  // Función para manejar el evento de presionar Enter en el input
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchClick(); // Llama a la función de redirección
+    }
+  };
+
   return (
 
-    <div className='inline-flex items-center justify-center border border-gray-400 px-5 py-2 my-5 mx-3 rounded-full w-94 sm:w-1/2'>
-        <input value={search} onChange={(e)=>setSearch(e.target.value)} className='flex-1 outline-none bg-inherit text-sm' type="text" placeholder='Search'/>
-        <img className='w-4' src='assets/search_icon.png'/>
+    <div className='inline-flex items-center justify-center border border-gray-400 px-1 py-3 my-5 md:mx-3 rounded-full w-1/2 sm:w-full '>
+        <input onKeyDown={handleKeyDown} value={search} onChange={(e)=>setSearch(e.target.value)} className='flex-1 outline-none bg-inherit text-sm w-full' type="text" placeholder=' Search'/>
+        <img onClick={handleSearchClick} className='w-4 cursor-pointer hover:scale-110' src='assets/search_icon.png'/>
     </div>
     
     

@@ -12,8 +12,9 @@ const Nav = () => {
 
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
-      <img src={img} alt="" className='size-16'/>
-      <ul className='hidden sm:flex gap-5 text-sm text-gray-500'>
+      <img src={img} alt="" className='size-16 flex md:hidden mr-4'/>
+      <ul className='hidden md:flex gap-5 text-sm text-gray-500 items-center'>
+        <img src={img} alt="" className='size-16'/>
         <NavLink to='/' className='flex flex-col items-center gap-1 hover:text-gray-800'>
           <p>Inicio</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
@@ -49,7 +50,7 @@ const Nav = () => {
           <img src={assets.cart_icon} className='w-5 min-w5' alt="" />
           <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
         </Link>
-        <img onClick={()=>setVisible(true)} src={assets.menu_icon} className='w-5 cursor-pointer sm:hidden'></img>
+        <img onClick={()=>setVisible(true)} src={assets.menu_icon} className='w-5 cursor-pointer md:hidden'></img>
       </div>
       {/** Mobile Menu */}
       <div className={`absolute top-0 right-0 overflow-hidden bg-white transition-all duration-300 ${visible ? 'w-full':'w-0'}`}>
