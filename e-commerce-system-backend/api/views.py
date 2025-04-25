@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .models import Producto,Categoria
-from .serializers import ProductoSerializer,CategoriaSerializer,SubCategoriaSerializer,MedidaSerializer
+from .models import Producto,Categoria,SubCategoria,Medida,Imagen
+from .serializers import ProductoSerializer,CategoriaSerializer,SubCategoriaSerializer,MedidaSerializer, ImagenSerializer
 from rest_framework import generics,viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -53,11 +53,14 @@ class CategoriaView(viewsets.ModelViewSet):
 
 class SubCategoriaView(viewsets.ModelViewSet):
     serializer_class = SubCategoriaSerializer
-    queryset = Categoria.objects.all()
+    queryset = SubCategoria.objects.all()
 
 class MedidaView(viewsets.ModelViewSet):
     serializer_class = MedidaSerializer
-    queryset = Categoria.objects.all() 
+    queryset = Medida.objects.all() 
+class ImagenView(viewsets.ModelViewSet):
+    serializer_class = ImagenSerializer
+    queryset = Imagen.objects.all()
 # class ProductoView(APIView):
 #     def get(self,request):
 #         data= Producto.objects.all()

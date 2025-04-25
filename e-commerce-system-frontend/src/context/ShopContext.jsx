@@ -22,6 +22,7 @@ export const ShopContext = createContext();
      // Llama a fetchProductos cuando el contexto se monte
      useEffect(() => {
         fetchProductos();
+        
     }, []);
 
     // Valor compartido en el contexto

@@ -22,13 +22,12 @@ class Medida(models.Model):
 
     def __str__(self):
         return self.nombre
-
+    
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.TextField(null=True)
     precio = models.DecimalField(decimal_places=2,max_digits=10)
     stock = models.IntegerField(default=0)
-    imagenes = models.CharField(max_length=300)
     categoria = models.ForeignKey(Categoria,related_name="Productos",on_delete=models.RESTRICT,null=True)
     subCategoria = models.ForeignKey(SubCategoria,related_name="Productos",on_delete=models.RESTRICT,null=True)
     medida= models.ForeignKey(Medida,related_name="Productos",on_delete=models.RESTRICT,null=True)
@@ -36,6 +35,13 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Imagen(models.Model):
+    producto = models.ForeignKey('Producto', related_name='imagenes', on_delete=models.CASCADE)
+    imagen = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f"Imagen de {self.producto.nombre}"
 
 # class Carrito(models.Model):
 #     usuario = models.ForeignKey(User, on_delete=models.CASCADE)

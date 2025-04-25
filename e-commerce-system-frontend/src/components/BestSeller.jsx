@@ -10,7 +10,6 @@ const BestSeller = () => {
     useEffect(() => {
         const bestProduct = productos.filter((item)=>(item.masvendido));
         setBestSeller(bestProduct);
-        console.log(productos)
     },[productos])
 
   return (
