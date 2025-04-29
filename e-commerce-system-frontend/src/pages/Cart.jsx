@@ -22,7 +22,9 @@ const Cart = () => {
       }
     }
     setCartData(tempData);
+    
   },[cartItems])
+  console.log(cartData);
   return (
     <div className='border-t pt-14'>
       <div className='text-2xl mb-3'>
@@ -44,7 +46,7 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-                <input onChange={(e)=> e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item.id,item.size,Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type='number' min={1} defaultValue={item.quantity}/>
+                <input onChange={(e)=> e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item.id,item.size,Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type='number' min={1} value={item.quantity}/>
                 <img onClick={()=>updateQuantity(item.id,item.size,0)} className='w-4 mr-4 sm:w-5 cursor-pointer' src='/assets/bin_icon.png'/>
               </div>
             )

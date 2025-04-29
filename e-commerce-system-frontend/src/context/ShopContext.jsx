@@ -67,6 +67,7 @@ export const ShopContext = createContext();
       let cartData = structuredClone(cartItems);
       cartData[itemId][size]= quantity;
       setCartItems(cartData);
+      
     }
 
      // Llama a fetchProductos cuando el contexto se monte
