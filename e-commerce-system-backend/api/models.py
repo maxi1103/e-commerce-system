@@ -30,7 +30,7 @@ class Producto(models.Model):
     stock = models.IntegerField(default=0)
     categoria = models.ForeignKey(Categoria,related_name="Productos",on_delete=models.RESTRICT,null=True)
     subCategoria = models.ForeignKey(SubCategoria,related_name="Productos",on_delete=models.RESTRICT,null=True)
-    medida= models.ForeignKey(Medida,related_name="Productos",on_delete=models.RESTRICT,null=True)
+    medidas= models.ManyToManyField(Medida,related_name="Productos",null=True)
     masvendido=models.BooleanField(default=False)
 
     def __str__(self):

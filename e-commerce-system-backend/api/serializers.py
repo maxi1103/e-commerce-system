@@ -6,12 +6,18 @@ class ImagenSerializer(serializers.ModelSerializer):
         model = Imagen
         fields = '__all__'  # Incluye los campos que deseas exponer
 
+class MedidaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Medida
+        fields = '__all__'
+
 class ProductoSerializer(serializers.ModelSerializer):
     imagenes = ImagenSerializer(many=True, read_only=True)  # Incluye las imágenes relacionadas
+    medidas= MedidaSerializer(many=True, read_only=True)
 
     class Meta:
         model = Producto
-        fields = ['id', 'nombre', 'descripcion', 'precio', 'stock', 'categoria', 'subCategoria', 'medida', 'masvendido', 'imagenes']
+        fields = ['id', 'nombre', 'descripcion', 'precio', 'stock', 'categoria', 'subCategoria', 'medidas', 'masvendido', 'imagenes']
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,8 +29,5 @@ class SubCategoriaSerializer(serializers.ModelSerializer):
         model = SubCategoria
         fields = '__all__'
 
-class MedidaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Medida
-        fields = '__all__'
+
 
