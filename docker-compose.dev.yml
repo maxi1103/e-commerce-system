@@ -5,9 +5,6 @@ services:
     build:
       context: ./e-commerce-system-frontend
       dockerfile: Dockerfile.dev
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     ports:
       - "5173:5173"
     depends_on:
@@ -18,7 +15,7 @@ services:
       context: ./e-commerce-system-backend
       dockerfile: Dockerfile.dev
     volumes:
-      - ./backend:/app
+      - ./e-commerce-system-backend:/app
     ports:
       - "8000:8000"
     environment:

@@ -27,4 +27,4 @@ COPY . .
 EXPOSE 8000
 
 #Script
-ENTRYPOINT ["sh","/entrypoint.sh"]
+ENTRYPOINT ["sh","/app/entrypoint.sh"]

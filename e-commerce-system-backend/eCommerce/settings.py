@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 import cloudinary
@@ -147,7 +148,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 cloudinary.config( 
     cloud_name = "dm0ct1idr", 
-    api_key = config('API_KEY'), 
-    api_secret = config('SECRET_KEY'), # Click 'View API Keys' above to copy your API secret
+    api_key = config('API_KEY', default=''), 
+    api_secret = config('SECRET_KEY', default=''), # Click 'View API Keys' above to copy your API secret
     secure=True
 )
