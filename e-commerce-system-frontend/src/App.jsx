@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import Product from './pages/Product'
 import PlaceOrder from './pages/PlaceOrder'
 import Orders from './pages/Orders'
+import Dashboard from './pages/Dashboard'
 import Footer from './components/Footer'
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/product/:productId" element={<Product/>}></Route>
         <Route path="/place-order" element={<PlaceOrder/>}></Route>
         <Route path="/orders" element={<Orders/>}></Route>
+        <Route path="/dashboard/*" element={<Dashboard/>}/>
       </Routes>
       <Footer/>
     </div>

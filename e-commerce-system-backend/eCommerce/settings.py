@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'api',
     'api_auth',
+    'cms',
     'rest_framework',
     'corsheaders',
     'cloudinary',

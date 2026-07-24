@@ -31,6 +31,7 @@ const Nav = () => {
           <p>Contactanos</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
         </NavLink>
+
       </ul>
       <div className='flex items-center gap-6'>
         <SearchBarN/>
@@ -63,6 +64,7 @@ const Nav = () => {
           <NavLink onClick={()=>setVisible(false)} to='/collection' className='py-2 pl-6 border'>Colección</NavLink>
           <NavLink onClick={()=>setVisible(false)} to='/about' className='py-2 pl-6 border'>Sobre Nosotros</NavLink>
           <NavLink onClick={()=>setVisible(false)} to='/contact' className='py-2 pl-6 border'>Contactanos</NavLink>
+
         </div>
       </div>
     </div>

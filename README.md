@@ -52,7 +52,7 @@ For Cloudinary image upload, create a `.env` file with `API_KEY` and `SECRET_KEY
 ```bash
 cd e-commerce-system-frontend
 pnpm install
-pnpm dev      # http://localhost:5173
+pnpm run dev      # http://localhost:5173
 pnpm build    # production build
 pnpm lint     # ESLint
 ```

@@ -1,11 +1,9 @@
 from django.http import JsonResponse
 from .models import Producto,Categoria,SubCategoria,Medida,Imagen
 from .serializers import ProductoSerializer,CategoriaSerializer,SubCategoriaSerializer,MedidaSerializer, ImagenSerializer
-from rest_framework import generics,viewsets
+from rest_framework import generics,viewsets,status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import os
-from django.conf import settings
 
 def index(request):
     context = {
@@ -20,32 +18,40 @@ class ProductoView(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
 
     def create(self, request, *args, **kwargs):
-        # Verificar si se envió una imagen
-        image = request.FILES.get('image')
-        if image:
-            # Ruta donde se guardará la imagen (en la carpeta del frontend)
-            frontend_assets_path = os.path.join(settings.BASE_DIR, '../e-commerce-system-frontend/src/assets')
-            os.makedirs(frontend_assets_path, exist_ok=True)  # Crear la carpeta si no existe
-
-            # Guardar la imagen
-            image_path = os.path.join(frontend_assets_path, image.name)
-            with open(image_path, 'wb') as f:
-                for chunk in image.chunks():
-                    f.write(chunk)
-
-            # Construir la URL relativa para guardar en la base de datos
-            image_url = f"/assets/{image.name}"
-        else:
-            image_url = None
-
-        # Crear el producto con la URL de la imagen
         data = request.data.copy()
-        data['imagenes'] = image_url
+        medida_ids = data.pop('medidas', [])
+        imagen_url = data.pop('imagen_url', None)
+
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        producto = serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if medida_ids:
+            producto.medidas.set(medida_ids)
+
+        if imagen_url:
+            Imagen.objects.create(producto=producto, imagen=imagen_url)
+
+        return Response(ProductoSerializer(producto).data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = request.data.copy()
+        medida_ids = data.pop('medidas', None)
+        imagen_url = data.pop('imagen_url', None)
+
+        serializer = self.get_serializer(instance, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        producto = serializer.save()
+
+        if medida_ids is not None:
+            producto.medidas.set(medida_ids)
+
+        if imagen_url:
+            producto.imagenes.all().delete()
+            Imagen.objects.create(producto=producto, imagen=imagen_url)
+
+        return Response(ProductoSerializer(producto).data)
 
 class CategoriaView(viewsets.ModelViewSet):
     serializer_class = CategoriaSerializer
