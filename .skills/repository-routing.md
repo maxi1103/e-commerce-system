@@ -9,10 +9,10 @@ Frontend:
 - React + Vite
 
 El frontend posee sus propias skills especializadas dentro de
-.agents/skills/.
+e-commerce-system-frontend/.agents/skills/.
 
 El backend posee sus propias skills especialziadas dentro de
-.agents/skills/.
+e-commerce-system-backend/.agents/skills/.
 
 Antes de responder, determinar si la solicitud corresponde al backend,
 al frontend o a ambos proyectos.
