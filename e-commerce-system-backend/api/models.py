@@ -1,6 +1,5 @@
 from django.db import models
 #from api_auth.models import Cliente
-from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
@@ -10,7 +9,7 @@ class User(AbstractUser):
 
 class ClienteProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="client_profile")
-    dni = models.Charfield(max_length=20, unique=True)
+    dni = models.CharField(max_length=20, unique=True)
     nombre= models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     direccion = models.CharField(max_length=255, null=True, blank=True)
@@ -77,17 +76,35 @@ class Carrito(models.Model):
         return f"Carrito de {self.usuario.username}"
 
 
+class CarritoItem(models.Model):
+    producto_id= models.ForeignKey(Producto,related_name="CarritoItems",on_delete=models.RESTRICT,null=True)
+    carrito_id = models.ForeignKey(Carrito,related_name="CarritoItems",on_delete=models.RESTRICT,null=True)
+    cantidad = models.IntegerField(default=0)
 
-# class CarritoItem(models.Model):
-#     carrito = models.ForeignKey(Carrito, related_name='items', on_delete=models.CASCADE)
-#     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-#     cantidad = models.PositiveIntegerField(default=1)
+    def __str__(self):
+        return f"{self.cantidad} x {self.producto_id.nombre} in {self.carrito_id.usuario.username}'s cart"
 
-#     def __str__(self):
-#         return f"{self.cantidad} x {self.producto.nombre}"
+class Orden(models.Model):
+    usuario_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha_pedido= models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(decimal_places=2,max_digits=10)
+    status = models.CharField(max_length=20, default='Pendiente')
 
-#     def subtotal(self):
-#         return self.cantidad * self.producto.precio
+    def __str__(self):
+        return f"Orden {self.id} de {self.usuario_id.username} - Status: {self.status}"
 
+class OrdenItem(models.Model):
+    orden_id = models.ForeignKey(Orden, related_name="OrdenItems", on_delete=models.CASCADE)
+    producto_id = models.ForeignKey(Producto, related_name="OrdenItems", on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f"{self.cantidad} x {self.producto_id.nombre} in order {self.orden_id.id}"
+
+class Pago(models.Model):
+    orden_id = models.ForeignKey(Orden, related_name="Pagos", on_delete=models.CASCADE)
+    metodo_pago = models.CharField(max_length=50)
+    fecha_pago = models.DateTimeField(auto_now_add=True)
+    monto = models.DecimalField(decimal_places=2,max_digits=10)
+    transaccion_id = models.CharField(max_length=100, unique=True)
 
