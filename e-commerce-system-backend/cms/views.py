@@ -3,11 +3,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Banner, FeaturedProduct, SiteSetting
 from .serializers import BannerSerializer, FeaturedProductSerializer, SiteSettingSerializer
+from eCommerce.permissions import IsAdminUserOrReadOnly
 
 
 class BannerViewSet(viewsets.ModelViewSet):
     serializer_class = BannerSerializer
     queryset = Banner.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
 
     def get_queryset(self):
         qs = Banner.objects.all()
@@ -20,6 +22,7 @@ class BannerViewSet(viewsets.ModelViewSet):
 class FeaturedProductViewSet(viewsets.ModelViewSet):
     serializer_class = FeaturedProductSerializer
     queryset = FeaturedProduct.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
 
     def get_queryset(self):
         qs = FeaturedProduct.objects.select_related('product').all()
@@ -35,6 +38,7 @@ class FeaturedProductViewSet(viewsets.ModelViewSet):
 class SiteSettingViewSet(viewsets.ModelViewSet):
     serializer_class = SiteSettingSerializer
     queryset = SiteSetting.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         obj, _ = SiteSetting.objects.get_or_create(pk=1)
