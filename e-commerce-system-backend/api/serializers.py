@@ -12,14 +12,9 @@ class MedidaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductoSerializer(serializers.ModelSerializer):
-    imagenes = ImagenSerializer(many=True, read_only=True)
-    medida_ids = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Medida.objects.all(), source='medidas', required=False
-    )
-
     class Meta:
         model = Producto
-        fields = ['id', 'nombre', 'descripcion', 'precio', 'stock', 'categoria', 'subCategoria', 'medidas', 'medida_ids', 'masvendido', 'imagenes']
+        fields = ['id', 'nombre', 'descripcion', 'subCategoria']
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,6 +25,3 @@ class SubCategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubCategoria
         fields = '__all__'
-
-
-

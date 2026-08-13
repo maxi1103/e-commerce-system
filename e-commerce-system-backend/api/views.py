@@ -19,42 +19,6 @@ class ProductoView(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     permission_classes = [IsAdminUserOrReadOnly]
 
-    def create(self, request, *args, **kwargs):
-        data = request.data.copy()
-        medida_ids = data.pop('medidas', [])
-        imagen_url = data.pop('imagen_url', None)
-
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        producto = serializer.save()
-
-        if medida_ids:
-            producto.medidas.set(medida_ids)
-
-        if imagen_url:
-            Imagen.objects.create(producto=producto, imagen=imagen_url)
-
-        return Response(ProductoSerializer(producto).data, status=status.HTTP_201_CREATED)
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        data = request.data.copy()
-        medida_ids = data.pop('medidas', None)
-        imagen_url = data.pop('imagen_url', None)
-
-        serializer = self.get_serializer(instance, data=data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        producto = serializer.save()
-
-        if medida_ids is not None:
-            producto.medidas.set(medida_ids)
-
-        if imagen_url:
-            producto.imagenes.all().delete()
-            Imagen.objects.create(producto=producto, imagen=imagen_url)
-
-        return Response(ProductoSerializer(producto).data)
-
 class CategoriaView(viewsets.ModelViewSet):
     serializer_class = CategoriaSerializer
     queryset = Categoria.objects.all()
@@ -67,7 +31,7 @@ class SubCategoriaView(viewsets.ModelViewSet):
 
 class MedidaView(viewsets.ModelViewSet):
     serializer_class = MedidaSerializer
-    queryset = Medida.objects.all()
+    queryset = Medida.objects.all() 
     permission_classes = [IsAdminUserOrReadOnly]
 class ImagenView(viewsets.ModelViewSet):
     serializer_class = ImagenSerializer
