@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .models import Producto,Categoria,SubCategoria,Medida,Imagen
-from .serializers import ProductoSerializer,CategoriaSerializer,SubCategoriaSerializer,MedidaSerializer, ImagenSerializer
+from .models import Producto,Categoria,SubCategoria,Medida,Imagen,Carrito,CarritoItem,Orden,OrdenItem,Pago
+from .serializers import ProductoSerializer,CategoriaSerializer,SubCategoriaSerializer,MedidaSerializer, ImagenSerializer, CarritoSerializer, CarritoItemSerializer, OrdenSerializer, OrdenItemSerializer, PagoSerializer
 from rest_framework import generics,viewsets,status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -36,6 +36,31 @@ class MedidaView(viewsets.ModelViewSet):
 class ImagenView(viewsets.ModelViewSet):
     serializer_class = ImagenSerializer
     queryset = Imagen.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
+
+class CarritoView(viewsets.ModelViewSet):
+    serializer_class = CarritoSerializer
+    queryset = Carrito.objects.all()
+    permission_classes = [IsAuthenticated]
+
+class CarritoItemView(viewsets.ModelViewSet):
+    serializer_class = CarritoItemSerializer
+    queryset = CarritoItem.objects.all()
+    permission_classes = [IsAuthenticated]
+
+class OrdenView(viewsets.ModelViewSet):
+    serializer_class = OrdenSerializer
+    queryset = Orden.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
+
+class OrdenItemView(viewsets.ModelViewSet):
+    serializer_class = OrdenItemSerializer
+    queryset = OrdenItem.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
+
+class PagoView(viewsets.ModelViewSet):
+    serializer_class = PagoSerializer
+    queryset = Pago.objects.all()
     permission_classes = [IsAdminUserOrReadOnly]
 # class ProductoView(APIView):
 #     def get(self,request):
