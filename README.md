@@ -6,17 +6,18 @@ Full-stack e-commerce platform with a Django REST API backend and a React + Vite
 
 ```
 e-commerce-system/
-├── e-commerce-system-backend/   # Django 4.2 + DRF REST API
-│   ├── api/                     # Product catalog (Producto, Categoria, etc.)
-│   ├── api_auth/                # User registration (currently disabled)
+├ e-commerce-system-backend/   # Django 4.2 + DRF REST API
+│   ├── api/                     # Product catalog (Producto, Categoria, SubCategoria, Medida, Imagen, Carrito, Orden, Pago, etc.)
+│   ├── api_auth/                # User registration
+│   ├── cms/                     # CMS (Banners, Configuraciones, Productos Destacados)
 │   └── eCommerce/               # Django project settings
-├── e-commerce-system-frontend/  # React 18 + Vite SPA
+├ e-commerce-system-frontend/  # React 18 + Vite SPA
 │   └── src/
 │       ├── api/                 # Axios API client
 │       ├── components/          # Shared UI components
 │       ├── context/             # ShopContext (state management)
 │       └── pages/               # Route pages
-└── docker-compose.dev.yml       # Local dev orchestration
+└ docker-compose.dev.yml       # Local dev orchestration
 ```
 
 ## Quick start (Docker)
@@ -69,6 +70,14 @@ API calls are hardcoded to `http://127.0.0.1:8000` — update `src/api/producto.
 | `GET/POST /api/subcategorias/` | Subcategories |
 | `GET/POST /api/medidas/` | Measurements   |
 | `GET/POST /api/imagenes/` | Images       |
+| `GET/POST /api/carritos/` | Shopping carts |
+| `GET/POST /api/carritoitems/` | Cart items |
+| `GET/POST /api/ordenes/` | Orders       |
+| `GET/POST /api/ordenitems/` | Order items |
+| `GET/POST /api/pagos/` | Payments       |
+| `GET/POST /cms/banners/` | CMS banners    |
+| `GET/POST /cms/featured-products/` | Featured products |
+| `GET/POST /cms/site-settings/` | Site settings |
 
 ## Stack
 

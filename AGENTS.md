@@ -23,12 +23,13 @@ docker compose -f docker-compose.dev.yml up --build
 ## Backend
 
 **Django apps:**
-- `api/` — product catalog (Producto, Categoria, SubCategoria, Medida, Imagen) with ModelViewSets exposed at `/api/*`
+- `api/` — product catalog (Producto, Categoria, SubCategoria, Medida, Imagen, Carrito, Orden, Pago) with ModelViewSets exposed at `/api/*`
 - `api_auth/` — user registration (`/register` endpoint, but **commented out** from root `urls.py`)
+- `cms/` — CMS (Banners, Productos Destacados, Configuraciones del sitio) with ModelViewSets exposed at `/cms/*`
 
 **Database:** MySQL via env vars (`DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`). No test DB config.
 
-**Image upload:** Products can upload images. The `ProductoView.create` method saves uploaded files to `../e-commerce-system-frontend/src/assets/` (relative from backend root), so the frontend dev server can serve them.
+**Image upload:** Products can upload images. The `ProductoView.create` method saves uploaded files to `../e-commerce-system-frontend/src/assets/` (relative from backend root), so the frontend dev server can serve them. CMS also supports banner and featured product image uploads.
 
 **Cloudinary:** Configured in `settings.py` using `API_KEY` and `SECRET_KEY` from `.env` (via `python-decouple`).
 
@@ -58,7 +59,7 @@ pnpm host     # vite --host
 
 ## Testing
 
-- No tests exist. Both `tests.py` files are empty stubs.
+- No tests exist. Both `tests.py` files are empty stubs across all apps (`api`, `api_auth`, `cms`).
 - No test framework is configured.
 - No CI/CD pipelines.
 
