@@ -26,6 +26,8 @@ e-commerce-system/
 docker compose -f docker-compose.dev.yml up --build
 ```
 
+To run this in future, use `docker compose -f docker-compose.dev.yml up -d --build backend db`. Note: the entrypoint's 5s MySQL wait can occasionally be too short on a cold start — if you see "Can't connect to server on 'db'", just run `docker compose -f docker-compose.dev.yml restart backend`.
+
 | Service  | URL                           |
 |----------|-------------------------------|
 | Frontend | http://localhost:5173         |
