@@ -55,6 +55,7 @@ class ClienteMeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'profile']
+        read_only_fields = ['id', 'username']
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', None)
@@ -77,6 +78,7 @@ class ClienteDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'is_staff', 'profile']
+        read_only_fields = ['id', 'username']
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', None)
