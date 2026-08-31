@@ -51,22 +51,21 @@ class ClienteProfileSerializer(serializers.ModelSerializer):
 
 class ClienteMeSerializer(serializers.ModelSerializer):
     profile = ClienteProfileSerializer(source='client_profile', read_only=False, required=False)
-    email = serializers.EmailField(required=False)
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'profile']
         read_only_fields = ['id', 'username']
+        extra_kwargs = {'email': {'required': False}}
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', None)
 
-        if 'email' in validated_data:
-            instance.email = validated_data['email']
-            instance.save()
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
 
-        profile, _ = ClienteProfile.objects.get_or_create(user=instance)
         if profile_data:
+            profile = instance.client_profile
             for attr, value in profile_data.items():
                 setattr(profile, attr, value)
             profile.save()
@@ -81,6 +80,7 @@ class ClienteDetailSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'is_staff', 'profile']
         read_only_fields = ['id', 'username']
+        extra_kwargs = {'email': {'required': False}}
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', None)
@@ -89,8 +89,8 @@ class ClienteDetailSerializer(serializers.ModelSerializer):
         instance.is_staff = validated_data.get('is_staff', instance.is_staff)
         instance.save()
 
-        profile, _ = ClienteProfile.objects.get_or_create(user=instance)
         if profile_data:
+            profile = instance.client_profile
             for attr, value in profile_data.items():
                 setattr(profile, attr, value)
             profile.save()
