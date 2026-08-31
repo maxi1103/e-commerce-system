@@ -26,7 +26,8 @@ e-commerce-system/
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-To run this in future, use `docker compose -f docker-compose.dev.yml up -d --build backend db`. Note: the entrypoint's 5s MySQL wait can occasionally be too short on a cold start — if you see "Can't connect to server on 'db'", just run `docker compose -f docker-compose.dev.yml restart backend`.
+To run backend and db only use `docker compose -f docker-compose.dev.yml up -d --build backend db`. Note: the entrypoint's 5s MySQL wait can occasionally be too short on a cold start — if you see "Can't connect to server on 'db'", just run `docker compose -f docker-compose.dev.yml restart backend`.
+If first time running the proyect, you should create an admin user, on the backend docker container -> exec -> python manage.py createsuper --username "name"
 
 | Service  | URL                           |
 |----------|-------------------------------|
@@ -67,6 +68,9 @@ API calls are hardcoded to `http://127.0.0.1:8000` — update `src/api/producto.
 | Endpoint                | Description      |
 |-------------------------|------------------|
 | `GET /`                 | Status check     |
+| `POST /auth/register`   | Client Register  |
+| `GET /auth/clientes`    | Client List(Admin only) |
+
 | `GET/POST /api/productos/` | Products    |
 | `GET/POST /api/categorias/` | Categories  |
 | `GET/POST /api/subcategorias/` | Subcategories |
